@@ -22,13 +22,17 @@
 (when (not package-archive-contents)
     (package-refresh-contents))
 
-(defvar my-packages '(ac-nrepl auto-complete
+(defvar my-packages '(ac-nrepl auto-complete 
                      clojure-mode nrepl
                      paredit popup rainbow-delimiters))
 
 (dolist (p my-packages)
     (when (not (package-installed-p p))
           (package-install p)))
+
+;; auto indentation
+(add-hook 'clojure-mode-hook '(lambda ()
+      (local-set-key (kbd "RET") 'newline-and-indent)))
 
 ;; rainbow delimiters
 (global-rainbow-delimiters-mode)
