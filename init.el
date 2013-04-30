@@ -22,13 +22,25 @@
 (when (not package-archive-contents)
     (package-refresh-contents))
 
-(defvar my-packages '(ac-nrepl auto-complete 
-                     clojure-mode nrepl
-                     paredit popup rainbow-delimiters))
+(defvar my-packages '(starter-kit
+                      starter-kit-lisp
+                      starter-kit-bindings
+                      starter-kit-eshell
+                      ac-nrepl auto-complete 
+                      clojure-mode clojure-test-mode  nrepl
+                      paredit popup rainbow-delimiters))
 
 (dolist (p my-packages)
     (when (not (package-installed-p p))
           (package-install p)))
+
+;; highlight current line
+(defadvice hl-line-mode (after
+                         dino-advice-hl-line-mode
+                         compile)
+  (set-face-background hl-line-face "gray13"))
+
+(global-hl-line-mode)
 
 ;; auto indentation
 (add-hook 'clojure-mode-hook '(lambda ()
